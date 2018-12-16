@@ -20,7 +20,7 @@
             </div>
         </div>
     </div>
-    <footer class="page-footer main-footer no-padding hide-on-large-only">
+    <!-- <footer class="page-footer main-footer no-padding hide-on-large-only">
         <div class="col l12">
             <ul class="tabs tabs-fixed-width z-depth-1 tabs-bottom">
                 <li class="tab">
@@ -43,7 +43,7 @@
                 </li>
             </ul>
         </div>
-    </footer>
+    </footer> -->
     <div class="waiting">
         <div class="preloader-wrapper big active">
             <div class="spinner-layer spinner-blue-only">
