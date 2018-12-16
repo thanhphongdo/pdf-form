@@ -1,0 +1,90 @@
+html,
+body {
+    overscroll-behavior-y: contain;
+}
+#app {
+    font-family: "Avenir", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+}
+
+html, body, #app{
+    height: 100%;
+}
+
+.row{
+    margin-bottom: 0px;
+}
+
+.main-body{
+    padding-bottom: 50px;
+    height: 100%;
+}
+
+.main-footer{
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    z-index: 1;
+}
+
+.main-color-text{
+    color: #ee6e73;
+}
+
+.main-color-bg{
+    color: #ee6e73;
+}
+
+.tabs-bottom > li > a{
+    cursor: pointer;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.tabs-bottom > li > a > span{
+    line-height: 20px;
+}
+
+.tabs-bottom > .indicator{
+    top: 0px;
+}
+
+.waves-effect.waves-orange-lighten-1 .waves-ripple {
+    background-color: rgba(255,167,38, 0.7);
+}
+
+.btn-flat:focus{
+    background-color: transparent !important;
+}
+
+.input-field{
+    text-align: left;
+}
+
+.helper-text.input-error-message{
+    display: none;
+    color: #ee6e73;
+    text-align: left;
+}
+
+.waiting{
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100000;
+}
+
+@media(min-width:992px){
+    .main-body{
+        margin-top: -64px;
+        padding-top: 64px;
+    }
+}
