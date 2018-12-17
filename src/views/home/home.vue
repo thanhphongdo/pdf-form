@@ -1,5 +1,5 @@
 <template>
 <div class="height-100">
-    <!-- <FirstFlow></FirstFlow> -->
+    <CreateForm></CreateForm>
 </div>
 </template>
