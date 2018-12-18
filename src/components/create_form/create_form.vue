@@ -15,12 +15,18 @@
                 <div class="position-relative">
                     <canvas id="canvas" style="width: 300px; height: 500px"></canvas>
                     <div class="width-100 height-100 position-absolute top-0 left-0">
-                        <div id="resize-container">
-                            <!-- <div class="resizable" id="firstResizable">resize me<div class="resize-handle"></div>
-                            </div>
-                            <div class="resizable" style="left: 200px">resize me<div class="resize-handle"></div>
-                            </div> -->
-                            <Question></Question>
+                        <div v-if="showFormFlag" id="resize-container">
+                            <Question  v-for="(item, index) in formData" :key="index" 
+                            :width="item.question.width" 
+                            :height="item.question.height"
+                            :x="item.question.x" 
+                            :y="item.question.y">
+                                <Answer v-for="(ans, index) in item.answers" :key="index" 
+                                :width="ans.width" 
+                                :height="ans.height" 
+                                :x="ans.x" 
+                                :y="ans.y"></Answer>
+                            </Question>
                         </div>
                     </div>
                 </div>
