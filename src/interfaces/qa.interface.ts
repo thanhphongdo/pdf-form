@@ -10,6 +10,7 @@ export interface AnswerInterface {
     bgColor?: string;
     opacity?: number;
     borderColor?: string;
+    checked?: boolean;
 }
 
 export interface QuestionInterface {

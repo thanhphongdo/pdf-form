@@ -11,28 +11,28 @@ export const formData: QAInterface[] = [
         answers: [
             {
                 label: 'a',
-                width: 50,
+                width: 320,
                 height: 18,
                 x: 2,
                 y: 21
             },
             {
                 label: 'b',
-                width: 50,
+                width: 320,
                 height: 18,
                 x: 2,
                 y: 40
             },
             {
                 label: 'c',
-                width: 50,
+                width: 320,
                 height: 18,
                 x: 2,
                 y: 59
             },
             {
                 label: 'd',
-                width: 50,
+                width: 320,
                 height: 18,
                 x: 2,
                 y: 78
@@ -49,28 +49,28 @@ export const formData: QAInterface[] = [
         answers: [
             {
                 label: 'a',
-                width: 50,
+                width: 368,
                 height: 18,
                 x: 2,
                 y: 21
             },
             {
                 label: 'b',
-                width: 50,
+                width: 368,
                 height: 18,
                 x: 2,
                 y: 40
             },
             {
                 label: 'c',
-                width: 50,
+                width: 368,
                 height: 18,
                 x: 2,
                 y: 59
             },
             {
                 label: 'd',
-                width: 50,
+                width: 368,
                 height: 18,
                 x: 2,
                 y: 78
@@ -87,21 +87,21 @@ export const formData: QAInterface[] = [
         answers: [
             {
                 label: 'a',
-                width: 50,
+                width: 337,
                 height: 18,
                 x: 2,
                 y: 21
             },
             {
                 label: 'b',
-                width: 50,
+                width: 337,
                 height: 18,
                 x: 2,
                 y: 40
             },
             {
                 label: 'c',
-                width: 50,
+                width: 337,
                 height: 18,
                 x: 2,
                 y: 59
@@ -118,56 +118,56 @@ export const formData: QAInterface[] = [
         answers: [
             {
                 label: 'a',
-                width: 50,
+                width: 337,
                 height: 18,
                 x: 2,
                 y: 25
             },
             {
                 label: 'b',
-                width: 50,
+                width: 337,
                 height: 18,
                 x: 2,
                 y: 44
             },
             {
                 label: 'c',
-                width: 50,
+                width: 337,
                 height: 18,
                 x: 2,
                 y: 63
             },
             {
                 label: 'd',
-                width: 50,
+                width: 337,
                 height: 16,
                 x: 2,
                 y: 82
             },
             {
                 label: 'e',
-                width: 50,
+                width: 337,
                 height: 16,
                 x: 2,
                 y: 99
             },
             {
                 label: 'f',
-                width: 50,
+                width: 337,
                 height: 16,
                 x: 2,
                 y: 116
             },
             {
                 label: 'g',
-                width: 50,
+                width: 337,
                 height: 16,
                 x: 2,
                 y: 133
             },
             {
                 label: 'h',
-                width: 50,
+                width: 337,
                 height: 16,
                 x: 2,
                 y: 150
@@ -184,56 +184,56 @@ export const formData: QAInterface[] = [
         answers: [
             {
                 label: 'a',
-                width: 50,
+                width: 439,
                 height: 18,
                 x: 2,
                 y: 25
             },
             {
                 label: 'b',
-                width: 50,
+                width: 439,
                 height: 18,
                 x: 2,
                 y: 44
             },
             {
                 label: 'c',
-                width: 50,
+                width: 439,
                 height: 18,
                 x: 2,
                 y: 63
             },
             {
                 label: 'd',
-                width: 50,
+                width: 439,
                 height: 16,
                 x: 2,
                 y: 82
             },
             {
                 label: 'e',
-                width: 50,
+                width: 439,
                 height: 16,
                 x: 2,
                 y: 99
             },
             {
                 label: 'f',
-                width: 50,
+                width: 439,
                 height: 16,
                 x: 2,
                 y: 116
             },
             {
                 label: 'g',
-                width: 50,
+                width: 439,
                 height: 16,
                 x: 2,
                 y: 133
             },
             {
                 label: 'h',
-                width: 50,
+                width: 439,
                 height: 16,
                 x: 2,
                 y: 150
@@ -250,42 +250,42 @@ export const formData: QAInterface[] = [
         answers: [
             {
                 label: 'a',
-                width: 50,
+                width: 439,
                 height: 18,
                 x: 2,
                 y: 25
             },
             {
                 label: 'b',
-                width: 50,
+                width: 439,
                 height: 18,
                 x: 2,
                 y: 44
             },
             {
                 label: 'c',
-                width: 50,
+                width: 439,
                 height: 18,
                 x: 2,
                 y: 63
             },
             {
                 label: 'd',
-                width: 50,
+                width: 439,
                 height: 34,
                 x: 2,
                 y: 82
             },
             {
                 label: 'e',
-                width: 50,
+                width: 439,
                 height: 16,
                 x: 2,
                 y: 117
             },
             {
                 label: 'f',
-                width: 50,
+                width: 439,
                 height: 34,
                 x: 2,
                 y: 134
@@ -302,35 +302,35 @@ export const formData: QAInterface[] = [
         answers: [
             {
                 label: 'a',
-                width: 50,
+                width: 419,
                 height: 18,
                 x: 2,
                 y: 36
             },
             {
                 label: 'b',
-                width: 50,
+                width: 419,
                 height: 18,
                 x: 2,
                 y: 55
             },
             {
                 label: 'c',
-                width: 50,
+                width: 419,
                 height: 34,
                 x: 2,
                 y: 74
             },
             {
                 label: 'd',
-                width: 50,
+                width: 419,
                 height: 16,
                 x: 2,
                 y: 109
             },
             {
                 label: 'e',
-                width: 50,
+                width: 419,
                 height: 16,
                 x: 2,
                 y: 126
@@ -347,28 +347,28 @@ export const formData: QAInterface[] = [
         answers: [
             {
                 label: 'a',
-                width: 50,
+                width: 474,
                 height: 25,
                 x: 2,
                 y: 21
             },
             {
                 label: 'b',
-                width: 50,
+                width: 474,
                 height: 25,
                 x: 2,
                 y: 48
             },
             {
                 label: 'c',
-                width: 50,
+                width: 323,
                 height: 25,
                 x: 478,
                 y: 21
             },
             {
                 label: 'd',
-                width: 50,
+                width: 323,
                 height: 25,
                 x: 478,
                 y: 48

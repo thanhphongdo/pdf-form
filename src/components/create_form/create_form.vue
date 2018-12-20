@@ -25,7 +25,8 @@
                                 :width="ans.width" 
                                 :height="ans.height" 
                                 :x="ans.x" 
-                                :y="ans.y"></Answer>
+                                :y="ans.y"
+                                :label="ans.label"></Answer>
                             </Question>
                         </div>
                     </div>

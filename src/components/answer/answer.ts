@@ -33,27 +33,47 @@ export default class Answer extends BaseVue {
   @Prop() private label!: string;
   @Prop() private content!: string;
   @Prop() private value!: any;
+  @Prop() private checked!: boolean;
 
 
-  private prop: AnswerInterface = {};
+  private answerProp: AnswerInterface = {};
 
   constructor() {
     super();
   }
 
+  data() {
+    return {
+      answerProp: {
+        checked: this.checked || false,
+        width: this.width || 30,
+        height: this.height || 30,
+        x: this.x || 0,
+        y: this.y || 0,
+        label: this.label || '',
+        content: this.content || '',
+        value: this.value || null,
+        bgColor: this.bgColor || '#7cb342',
+        opacity: this.opacity || 0.2,
+        borderColor: this.borderColor || '#7cb342'
+      }
+    }
+  }
+
   mounted() {
     var self = this;
-    this.prop.type = this.type || 'checkbox';
-    this.prop.width = this.width || 30;
-    this.prop.height = this.height || 30;
-    this.prop.x = this.x || 0;
-    this.prop.y = this.y || 0;
-    this.prop.label = this.label || '';
-    this.prop.content = this.content || '';
-    this.prop.value = this.value || null;
-    this.prop.bgColor = this.bgColor || '#7cb342',
-    this.prop.opacity= this.opacity || 0.2;
-    this.prop.borderColor= this.borderColor || '#7cb342';
+    // this.answerProp.type = this.type || 'checkbox';
+    // this.answerProp.width = this.width || 30;
+    // this.answerProp.height = this.height || 30;
+    // this.answerProp.x = this.x || 0;
+    // this.answerProp.y = this.y || 0;
+    // this.answerProp.label = this.label || '';
+    // this.answerProp.content = this.content || '';
+    // this.answerProp.value = this.value || null;
+    // this.answerProp.bgColor = this.bgColor || '#7cb342',
+    // this.answerProp.opacity= this.opacity || 0.2;
+    // this.answerProp.borderColor= this.borderColor || '#7cb342';
+    // this.answerProp.checked= this.checked || false;
     interact(this.$refs.answer)
       .draggable({})
       .resizable({
@@ -90,10 +110,10 @@ export default class Answer extends BaseVue {
 
         target.setAttribute('data-x', x);
         target.setAttribute('data-y', y);
-        self.prop.x = x;
-        self.prop.y = y;
-        self.prop.width = event.rect.width;
-        self.prop.height = event.rect.height;
+        self.answerProp.x = x;
+        self.answerProp.y = y;
+        self.answerProp.width = event.rect.width;
+        self.answerProp.height = event.rect.height;
       });
 
 
@@ -111,33 +131,43 @@ export default class Answer extends BaseVue {
       // update the posiion attributes
       target.setAttribute('data-x', x);
       target.setAttribute('data-y', y);
-      self.prop.x = x;
-      self.prop.y = y;
+      self.answerProp.x = x;
+      self.answerProp.y = y;
     }
 
     this.setPosition();
     this.setSize();
     this.setStyle();
   }
-  
-  getInfo(){
-    console.log(this.prop);
+
+  getInfo() {
+    console.log(this.answerProp);
+  }
+
+  check() {
+    this.answerProp.checked = !this.answerProp.checked;
+    if (this.answerProp.checked) {
+      (this.answerProp.opacity as number) += 0.2;
+    } else {
+      (this.answerProp.opacity as number) -= 0.2;
+    }
+    this.setStyle();
   }
 
   setPosition() {
-    (<HTMLDivElement>this.$refs.answer).style.transform = 'translate(' + (this.prop.x || 0) + 'px, ' + (this.prop.y || 0) + 'px)';
-    (<HTMLDivElement>this.$refs.answer).setAttribute('data-x', (this.prop.x || 0) + '');
-    (<HTMLDivElement>this.$refs.answer).setAttribute('data-y', (this.prop.y || 0) + '');
+    (<HTMLDivElement>this.$refs.answer).style.transform = 'translate(' + (this.answerProp.x || 0) + 'px, ' + (this.answerProp.y || 0) + 'px)';
+    (<HTMLDivElement>this.$refs.answer).setAttribute('data-x', (this.answerProp.x || 0) + '');
+    (<HTMLDivElement>this.$refs.answer).setAttribute('data-y', (this.answerProp.y || 0) + '');
   }
 
   setSize() {
-    (<HTMLDivElement>this.$refs.answer).style.width = (this.prop.width || 0) + 'px';
-    (<HTMLDivElement>this.$refs.answer).style.height = (this.prop.height || 0) + 'px';
+    (<HTMLDivElement>this.$refs.answer).style.width = (this.answerProp.width || 0) + 'px';
+    (<HTMLDivElement>this.$refs.answer).style.height = (this.answerProp.height || 0) + 'px';
   }
 
-  setStyle(){
-    (<HTMLDivElement>this.$refs.answer).style.backgroundColor = this.hexToRgb(this.prop.bgColor as string, this.prop.opacity);
-    (<HTMLDivElement>this.$refs.answer).style.border = '1px solid ' + this.hexToRgb(this.prop.borderColor as string, 1);
+  setStyle() {
+    (<HTMLDivElement>this.$refs.answer).style.backgroundColor = this.hexToRgb(this.answerProp.bgColor as string, this.answerProp.opacity);
+    (<HTMLDivElement>this.$refs.answer).style.border = '1px solid ' + this.hexToRgb(this.answerProp.borderColor as string, 1);
   }
 
   hexToRgb(hex: string, opacity?: number) {
