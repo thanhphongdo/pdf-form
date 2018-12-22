@@ -3,6 +3,7 @@ import template from './answer.vue'
 import { AnswerInterface } from '../../interfaces/qa.interface'
 import { mapGetters, mapActions } from 'vuex'
 import { BaseVue } from '../../shared/components/index'
+import {AnswerType} from '../../enums';
 var interact = require('interactjs');
 
 export interface AnswerStyleInterface {
@@ -45,6 +46,7 @@ export default class Answer extends BaseVue {
   data() {
     return {
       answerProp: {
+        type: this.type || AnswerType.CHECKBOX,
         checked: this.checked || false,
         width: this.width || 30,
         height: this.height || 30,
@@ -62,18 +64,6 @@ export default class Answer extends BaseVue {
 
   mounted() {
     var self = this;
-    // this.answerProp.type = this.type || 'checkbox';
-    // this.answerProp.width = this.width || 30;
-    // this.answerProp.height = this.height || 30;
-    // this.answerProp.x = this.x || 0;
-    // this.answerProp.y = this.y || 0;
-    // this.answerProp.label = this.label || '';
-    // this.answerProp.content = this.content || '';
-    // this.answerProp.value = this.value || null;
-    // this.answerProp.bgColor = this.bgColor || '#7cb342',
-    // this.answerProp.opacity= this.opacity || 0.2;
-    // this.answerProp.borderColor= this.borderColor || '#7cb342';
-    // this.answerProp.checked= this.checked || false;
     interact(this.$refs.answer)
       .draggable({})
       .resizable({
@@ -151,6 +141,7 @@ export default class Answer extends BaseVue {
     } else {
       (this.answerProp.opacity as number) -= 0.2;
     }
+    this.$emit('answer', this.answerProp);
     this.setStyle();
   }
 

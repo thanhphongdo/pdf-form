@@ -3,6 +3,7 @@ import { QuestionInterface, AnswerInterface, QAInterface } from '../../interface
 export const formData: QAInterface[] = [
     {
         question: {
+            id: 1,
             width: 326,
             height: 101,
             x: 0,
@@ -41,6 +42,7 @@ export const formData: QAInterface[] = [
     },
     {
         question: {
+            id: 2,
             width: 374,
             height: 101,
             x: 0,
@@ -79,6 +81,7 @@ export const formData: QAInterface[] = [
     },
     {
         question: {
+            id: 3,
             width: 343,
             height: 83,
             x: 0,
@@ -110,6 +113,7 @@ export const formData: QAInterface[] = [
     },
     {
         question: {
+            id: 4,
             width: 343,
             height: 172,
             x: 0,
@@ -176,6 +180,7 @@ export const formData: QAInterface[] = [
     },
     {
         question: {
+            id: 5,
             width: 445,
             height: 172,
             x: 0,
@@ -242,6 +247,7 @@ export const formData: QAInterface[] = [
     },
     {
         question: {
+            id: 6,
             width: 445,
             height: 172,
             x: 0,
@@ -294,6 +300,7 @@ export const formData: QAInterface[] = [
     },
     {
         question: {
+            id: 7,
             width: 424,
             height: 147,
             x: 0,
@@ -339,6 +346,7 @@ export const formData: QAInterface[] = [
     },
     {
         question: {
+            id: 14,
             width: 804,
             height: 78,
             x: 0,

@@ -3,6 +3,12 @@ export const AuthenStep = {
   REGISTER: 'REGISTER'
 }
 
+export const AnswerType = {
+  CHECKBOX: 'CHECKBOX',
+  RADIO: 'RADIO',
+  TEXTBOX: 'TEXTBOX',
+}
+
 export const FirstFlowStep = {
   AUTHEN: 'AUTHEN',
   SELECT_LEVEL: 'SELECT_LEVEL',

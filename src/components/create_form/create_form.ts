@@ -8,9 +8,13 @@ import { PDFJSStatic } from 'pdfjs-dist';
 import { Pagination, PaginationConfig } from 'pagination-tools';
 import Question from '@/components/question/question.ts'
 import Answer from '@/components/answer/answer.ts'
-import {QAInterface, formData} from './form_data';
+import { formData } from './form_data';
 var pdfJS: PDFJSStatic = <any>PdfJSModule;
 var interact = require('interactjs');
+// import * as jQuery from 'jquery'
+// var $: JQueryStatic = jQuery.default
+import * as M from 'materialize-css'
+// var MC: any = M
 
 @Component({
   name: 'CreateForm',
@@ -19,23 +23,37 @@ var interact = require('interactjs');
     Answer
   },
   mixins: [template],
-  computed: mapGetters([]),
+  computed: mapGetters(['getQAData']),
   methods: {
-    ...mapActions([])
+    ...mapActions(['answer'])
   }
 })
 export default class CreateForm extends BaseVue {
 
   private pdfViewer !: PdfJSModule.PDFDocumentProxy;
   private pagination: Pagination = new Pagination();
-  private formData: Array<QAInterface> = formData;
+  private formData: Array<QAInterface> = JSON.parse(JSON.stringify(formData));
   private showFormFlag: boolean = false;
+  public getQAData: any;
+  public answer: any;
+  private previewAnswerModal!: M.Modal;
   mounted() {
     var self = this;
     this.pagination = new Pagination(new PaginationConfig({
       getDataFunc: (page: number, perPage: number) => {
         var pdfScale = 1.5;
+        self.showFormFlag = false;
+        self.formData = [];
         return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            self.showFormFlag = true;
+            if (self.getQAData(page)) {
+              self.formData = self.getQAData(page).qa;
+            } else {
+              self.formData = JSON.parse(JSON.stringify(formData));
+            }
+          }, 200);
+          console.log(111);
           if (page > self.pagination.config.numOfPage) {
             self.pagination.config.page = self.pagination.config.numOfPage;
             return;
@@ -56,7 +74,7 @@ export default class CreateForm extends BaseVue {
             renderPDFContext.height = viewport.height;
             renderPDFContext.style.width = viewport.width + 'px';
             renderPDFContext.style.height = viewport.height + 'px';
-            setTimeout(()=>{
+            setTimeout(() => {
               self.showFormFlag = true;
             }, 100);
             page.render(renderContext);
@@ -65,6 +83,8 @@ export default class CreateForm extends BaseVue {
         })
       }
     }));
+    
+    // this.previewAnswerModal = M.Modal.init(document.querySelector('#previewAnswerModal') as Element);
   }
 
   preview() {
@@ -84,6 +104,23 @@ export default class CreateForm extends BaseVue {
       }
       reader.readAsArrayBuffer(file[0]);
     }
+  }
+
+  showAnswerPreview(){
+    // this.previewAnswerModal.open();
+  }
+
+  onAnswer(question: QuestionInterface) {
+    for (var i = 0; i < this.formData.length; i++) {
+      if (this.formData[i].question.id == question.id) {
+        this.formData[i].answers = question.answers as AnswerInterface[];
+      }
+    }
+    this.answer({
+      qa: this.formData,
+      id: this.pagination.config.page
+    });
+    console.log(this.formData);
   }
 
 }

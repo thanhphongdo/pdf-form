@@ -1,6 +1,6 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import template from './question.vue'
-import { QuestionInterface } from '../../interfaces/qa.interface'
+import { QuestionInterface, AnswerInterface } from '../../interfaces/qa.interface'
 import { mapGetters, mapActions } from 'vuex'
 import { BaseVue } from '../../shared/components/index'
 import Answer from '@/components/answer/answer.ts'
@@ -29,21 +29,33 @@ export default class Question extends BaseVue {
   @Prop() private label!: string;
   @Prop() private content!: string;
   @Prop() private value!: any;
+  @Prop() private answers!: AnswerInterface[];
 
-  private prop: QuestionInterface = {};
+  private questionProp: QuestionInterface = {};
+
+  data() {
+    var data: {
+      questionProp?: QuestionInterface
+    } = {
+      questionProp: {
+        width: this.width || 30,
+        height: this.height || 30,
+        x: this.x || 0,
+        y: this.y || 0,
+        label: this.label || '',
+        content: this.content || '',
+        value: this.value || null,
+        bgColor: this.bgColor || '#7cb342',
+        opacity: this.opacity || 0.1,
+        borderColor: this.borderColor || '#7cb342',
+        answers: this.answers || []
+      }
+    }
+    return data;
+  }
 
   mounted() {
     var self = this;
-    this.prop.width = this.width || 30;
-    this.prop.height = this.height || 30;
-    this.prop.x = this.x || 0;
-    this.prop.y = this.y || 0;
-    this.prop.label = this.label || '';
-    this.prop.content = this.content || '';
-    this.prop.value = this.value || null;
-    this.prop.bgColor = this.bgColor || '#7cb342';
-    this.prop.opacity = this.opacity || 0.1;
-    this.prop.borderColor = this.borderColor || '#7cb342';
 
     interact(this.$refs.question)
       .draggable({})
@@ -80,10 +92,10 @@ export default class Question extends BaseVue {
 
         target.setAttribute('data-x', x);
         target.setAttribute('data-y', y);
-        self.prop.x = x;
-        self.prop.y = y;
-        self.prop.width = event.rect.width;
-        self.prop.height = event.rect.height;
+        self.questionProp.x = x;
+        self.questionProp.y = y;
+        self.questionProp.width = event.rect.width;
+        self.questionProp.height = event.rect.height;
       });
 
 
@@ -102,8 +114,8 @@ export default class Question extends BaseVue {
       // update the posiion attributes
       target.setAttribute('data-x', x);
       target.setAttribute('data-y', y);
-      self.prop.x = x;
-      self.prop.y = y;
+      self.questionProp.x = x;
+      self.questionProp.y = y;
     }
 
     this.setPosition();
@@ -111,24 +123,37 @@ export default class Question extends BaseVue {
     this.setStyle();
   }
 
-  getInfo(){
-    console.log(this.prop);
+  onAnswer(answer: AnswerInterface) {
+    var answers = this.questionProp.answers as AnswerInterface[];
+    for (var i = 0; i < answers.length; i++) {
+      if (answers[i].label == answer.label) {
+        answers[i] = answer;
+        break;
+      }
+    }
+    this.questionProp.answers = answers;
+    this.$emit('answer', this.questionProp);
+    console.log(this.questionProp);
+  }
+
+  getInfo() {
+    console.log(this.questionProp);
   }
 
   setPosition() {
-    (<HTMLDivElement>this.$refs.question).style.transform = 'translate(' + (this.prop.x || 0) + 'px, ' + (this.prop.y || 0) + 'px)';
-    (<HTMLDivElement>this.$refs.question).setAttribute('data-x', (this.prop.x || 0) + '');
-    (<HTMLDivElement>this.$refs.question).setAttribute('data-y', (this.prop.y || 0) + '');
+    (<HTMLDivElement>this.$refs.question).style.transform = 'translate(' + (this.questionProp.x || 0) + 'px, ' + (this.questionProp.y || 0) + 'px)';
+    (<HTMLDivElement>this.$refs.question).setAttribute('data-x', (this.questionProp.x || 0) + '');
+    (<HTMLDivElement>this.$refs.question).setAttribute('data-y', (this.questionProp.y || 0) + '');
   }
 
   setSize() {
-    (<HTMLDivElement>this.$refs.question).style.width = (this.prop.width || 0) + 'px';
-    (<HTMLDivElement>this.$refs.question).style.height = (this.prop.height || 0) + 'px';
+    (<HTMLDivElement>this.$refs.question).style.width = (this.questionProp.width || 0) + 'px';
+    (<HTMLDivElement>this.$refs.question).style.height = (this.questionProp.height || 0) + 'px';
   }
 
   setStyle() {
-    (<HTMLDivElement>this.$refs.question).style.backgroundColor = this.hexToRgb(this.prop.bgColor as string, this.prop.opacity);
-    (<HTMLDivElement>this.$refs.question).style.border = '1px solid ' + this.hexToRgb(this.prop.borderColor as string, 1);
+    (<HTMLDivElement>this.$refs.question).style.backgroundColor = this.hexToRgb(this.questionProp.bgColor as string, this.questionProp.opacity);
+    (<HTMLDivElement>this.$refs.question).style.border = '1px solid ' + this.hexToRgb(this.questionProp.borderColor as string, 1);
   }
 
   hexToRgb(hex: string, opacity?: number) {
