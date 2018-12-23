@@ -72,7 +72,6 @@ export default class Question extends BaseVue {
       })
       .on('dragmove', dragMoveListener)
       .on('resizestart', function (event: any) {
-        console.info('resizestart = ', event)
       })
       .on('resizemove', function (event: any) {
         var target = event.target
@@ -136,7 +135,6 @@ export default class Question extends BaseVue {
     }
     this.questionProp.answers = answers
     this.$emit('answer', this.questionProp)
-    console.log(this.questionProp)
   }
 
   getInfo () {

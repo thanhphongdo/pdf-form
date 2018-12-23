@@ -47,7 +47,6 @@ const manageDataModule: Module<ManageDataModule, RootStateInterface> = {
       } else {
         state.formData.push(formData)
       }
-      console.log('xxx')
     }
   }
 }

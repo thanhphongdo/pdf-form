@@ -22,7 +22,7 @@
   outline: none;
 }
 
-.answer-item[data-v-b7983862]:focus::before{
+.answer-item:focus::before{
   content: '';
   position: absolute;
   border: 1px solid #1565c0;

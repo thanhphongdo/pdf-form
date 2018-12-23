@@ -1,4 +1,5 @@
 import { Level, Topic } from '../models/index'
+import { FormDataInterface } from './qa.interface';
 
 export interface GetSharedData {
 	(key: string): any;
@@ -16,4 +17,8 @@ export interface GetTopicBySource {
 
 export interface GetWordBySource {
 	(sourceId: string): Array<Topic>;
+}
+
+export interface GetQAData {
+	(id?: any): FormDataInterface | FormDataInterface[]
 }

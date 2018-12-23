@@ -4,8 +4,6 @@ import { validateMessage } from '../enums'
 import * as jQuery from 'jquery'
 var $: JQueryStatic = jQuery.default
 
-console.log(Vue.prototype)
-
 function validate (data: string) {
   return {
     pattern: function (reg: any) {

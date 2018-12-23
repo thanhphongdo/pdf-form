@@ -1,6 +1,6 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import template from './create_form.vue'
-import { QuestionInterface, AnswerInterface, QAInterface } from '../../interfaces/qa.interface'
+import { QuestionInterface, AnswerInterface, QAInterface, GetQAData, FormDataInterface } from '../../interfaces/index'
 import { mapGetters, mapActions } from 'vuex'
 import { BaseVue } from '../../shared/components/index'
 import * as PdfJSModule from 'pdfjs-dist'
@@ -9,12 +9,12 @@ import { Pagination, PaginationConfig } from 'pagination-tools'
 import Question from '@/components/question/question.ts'
 import Answer from '@/components/answer/answer.ts'
 import { formData } from './form_data'
-// import * as jQuery from 'jquery'
-// var $: JQueryStatic = jQuery.default
 import * as M from 'materialize-css'
 var pdfJS: PDFJSStatic = <any>PdfJSModule
 var interact = require('interactjs')
-// var MC: any = M
+import { Grid, GridOptions, GridApi } from 'ag-grid-community';
+import * as jQuery from 'jquery'
+var $: JQueryStatic = jQuery.default
 
 @Component({
   name: 'CreateForm',
@@ -33,26 +33,28 @@ export default class CreateForm extends BaseVue {
   private pagination: Pagination = new Pagination();
   private formData: Array<QAInterface> = JSON.parse(JSON.stringify(formData));
   private showFormFlag: boolean = false;
-  public getQAData: any;
+  public getQAData!: GetQAData;
   public answer: any;
   private previewAnswerModal!: M.Modal;
-  mounted () {
+  private gridOptions!: GridOptions;
+  mounted() {
     var self = this
     this.pagination = new Pagination(new PaginationConfig({
+      enableLoading: true,
       getDataFunc: (page: number, perPage: number) => {
         var pdfScale = 1.5
         self.showFormFlag = false
         self.formData = []
         return new Promise((resolve, reject) => {
+          self.showWaiting();
           setTimeout(() => {
             self.showFormFlag = true
             if (self.getQAData(page)) {
-              self.formData = self.getQAData(page).qa
+              self.formData = (self.getQAData(page) as FormDataInterface).qa
             } else {
               self.formData = JSON.parse(JSON.stringify(formData))
             }
           }, 200)
-          console.log(111)
           if (page > self.pagination.config.numOfPage) {
             self.pagination.config.page = self.pagination.config.numOfPage
             return
@@ -76,17 +78,31 @@ export default class CreateForm extends BaseVue {
             setTimeout(() => {
               self.showFormFlag = true
             }, 100)
-            page.render(renderContext)
-            resolve()
+            setTimeout(() => {
+              // document.getElementsByClassName('question')[0].getElementsByClassName('answer')[0].children[2].focus()
+              $('.question').first().find('.answer').first().children().last().focus();
+              self.hideWaiting();
+            }, 200)
+            page.render(renderContext).then(()=>{
+              resolve()
+            })
           })
         })
       }
     }))
 
-    // this.previewAnswerModal = M.Modal.init(document.querySelector('#previewAnswerModal') as Element);
+    this.previewAnswerModal = M.Modal.init(document.querySelector('#previewAnswerModal') as Element);
+    window.onkeyup = (event)=>{
+      if(event.ctrlKey && event.keyCode == 39){
+        self.pagination.nextPage();
+      }
+      if(event.ctrlKey && event.keyCode == 37){
+        self.pagination.prevPage();
+      }
+    }
   }
 
-  preview () {
+  preview() {
     var self = this
     var file = (<HTMLInputElement>document.getElementById('pdf-file')).files as FileList
     if (file && file.length) {
@@ -105,11 +121,52 @@ export default class CreateForm extends BaseVue {
     }
   }
 
-  showAnswerPreview () {
-    // this.previewAnswerModal.open();
+  showAnswerPreview() {
+    this.previewAnswerModal.open();
+    var data = this.getQAData() as FormDataInterface[];
+    var previewData: any[] = [];
+    var previewDataHeader: any[] = [];
+    data.forEach(item => {
+      var dataItem: any = {};
+      item.qa.forEach(qaItem => {
+        var col = 'Q' + qaItem.question.id + '_';
+        qaItem.answers.forEach(ansItem => {
+          dataItem[col + ansItem.label] = ansItem.checked || false;
+        })
+      })
+      previewData.push(dataItem)
+    })
+    this.formData.forEach(item => {
+      var col = 'Q' + item.question.id + '_';
+      // var dataHeaderItem: any = {};
+      item.answers.forEach(ansItem => {
+        previewDataHeader.push({
+          headerName: col + ansItem.label, 
+          field: col + ansItem.label,
+          width: 80
+        })
+      })
+    });
+    this.gridOptions = {
+      columnDefs: previewDataHeader,
+      rowData: previewData
+    };
+    let eGridDiv: HTMLElement = <HTMLElement>document.querySelector('#previewDataGrid');
+    new Grid(eGridDiv, this.gridOptions);
+    // (<any>window).x = this.gridOptions;
   }
 
-  onAnswer (question: QuestionInterface) {
+  exportCsv() {
+    var params = {
+      skipHeader: false,
+      skipFooters: true,
+      skipGroups: true,
+      fileName: "export.csv"
+    };
+    (this.gridOptions.api as GridApi).exportDataAsCsv(params);
+  }
+
+  onAnswer(question: QuestionInterface) {
     for (var i = 0; i < this.formData.length; i++) {
       if (this.formData[i].question.id == question.id) {
         this.formData[i].answers = question.answers as AnswerInterface[]
@@ -119,6 +176,5 @@ export default class CreateForm extends BaseVue {
       qa: this.formData,
       id: this.pagination.config.page
     })
-    console.log(this.formData)
   }
 }

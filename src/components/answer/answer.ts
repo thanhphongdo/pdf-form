@@ -79,7 +79,6 @@ export default class Answer extends BaseVue {
       })
       .on('dragmove', dragMoveListener)
       .on('resizestart', function (event: any) {
-        console.info('resizestart = ', event)
       })
       .on('resizemove', function (event: any) {
         var target = event.target

@@ -17,9 +17,11 @@ export class BaseVue extends Vue {
 
   showWaiting () {
     $('.waiting').css('display', 'flex')
+    $('body').css('overflow', 'hidden')
   }
 
   hideWaiting () {
     $('.waiting').css('display', 'none')
+    $('body').css('overflow', 'auto')
   }
 }
