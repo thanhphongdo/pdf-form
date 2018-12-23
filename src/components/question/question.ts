@@ -4,7 +4,7 @@ import { QuestionInterface, AnswerInterface } from '../../interfaces/qa.interfac
 import { mapGetters, mapActions } from 'vuex'
 import { BaseVue } from '../../shared/components/index'
 import Answer from '@/components/answer/answer.ts'
-var interact = require('interactjs');
+var interact = require('interactjs')
 
 @Component({
   name: 'Question',
@@ -18,7 +18,6 @@ var interact = require('interactjs');
   }
 })
 export default class Question extends BaseVue {
-
   @Prop() private width!: number;
   @Prop() private height!: number;
   @Prop() private x!: number;
@@ -33,7 +32,7 @@ export default class Question extends BaseVue {
 
   private questionProp: QuestionInterface = {};
 
-  data() {
+  data () {
     var data: {
       questionProp?: QuestionInterface
     } = {
@@ -51,11 +50,11 @@ export default class Question extends BaseVue {
         answers: this.answers || []
       }
     }
-    return data;
+    return data
   }
 
-  mounted() {
-    var self = this;
+  mounted () {
+    var self = this
 
     interact(this.$refs.question)
       .draggable({})
@@ -69,97 +68,101 @@ export default class Question extends BaseVue {
         }
       })
       .on('dragstart', function (event: any) {
-        event.preventDefault();
+        event.preventDefault()
       })
       .on('dragmove', dragMoveListener)
       .on('resizestart', function (event: any) {
-        console.info('resizestart = ', event);
+        console.info('resizestart = ', event)
       })
       .on('resizemove', function (event: any) {
-        var target = event.target,
-          x = (parseFloat(target.getAttribute('data-x')) || 0),
-          y = (parseFloat(target.getAttribute('data-y')) || 0);
+        var target = event.target
+
+        var x = (parseFloat(target.getAttribute('data-x')) || 0)
+
+        var y = (parseFloat(target.getAttribute('data-y')) || 0)
 
         // update the element's style
-        target.style.width = event.rect.width + 'px';
-        target.style.height = event.rect.height + 'px';
+        target.style.width = event.rect.width + 'px'
+        target.style.height = event.rect.height + 'px'
 
         // translate when resizing from top or left edges
-        x += event.deltaRect.left;
-        y += event.deltaRect.top;
+        x += event.deltaRect.left
+        y += event.deltaRect.top
         target.style.webkitTransform = target.style.transform =
-          'translate(' + x + 'px,' + y + 'px)';
+          'translate(' + x + 'px,' + y + 'px)'
 
-        target.setAttribute('data-x', x);
-        target.setAttribute('data-y', y);
-        self.questionProp.x = x;
-        self.questionProp.y = y;
-        self.questionProp.width = event.rect.width;
-        self.questionProp.height = event.rect.height;
-      });
+        target.setAttribute('data-x', x)
+        target.setAttribute('data-y', y)
+        self.questionProp.x = x
+        self.questionProp.y = y
+        self.questionProp.width = event.rect.width
+        self.questionProp.height = event.rect.height
+      })
 
-
-    function dragMoveListener(event: any) {
+    function dragMoveListener (event: any) {
       // console.log('drag')
-      var target = event.target,
-        // keep the dragged position in the data-x/data-y attributes
-        x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
-        y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+      var target = event.target
+
+      // keep the dragged position in the data-x/data-y attributes
+
+      var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
+
+      var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
 
       // translate the element
       target.style.webkitTransform =
         target.style.transform =
-        'translate(' + x + 'px, ' + y + 'px)';
+        'translate(' + x + 'px, ' + y + 'px)'
 
       // update the posiion attributes
-      target.setAttribute('data-x', x);
-      target.setAttribute('data-y', y);
-      self.questionProp.x = x;
-      self.questionProp.y = y;
+      target.setAttribute('data-x', x)
+      target.setAttribute('data-y', y)
+      self.questionProp.x = x
+      self.questionProp.y = y
     }
 
-    this.setPosition();
-    this.setSize();
-    this.setStyle();
+    this.setPosition()
+    this.setSize()
+    this.setStyle()
   }
 
-  onAnswer(answer: AnswerInterface) {
-    var answers = this.questionProp.answers as AnswerInterface[];
+  onAnswer (answer: AnswerInterface) {
+    var answers = this.questionProp.answers as AnswerInterface[]
     for (var i = 0; i < answers.length; i++) {
       if (answers[i].label == answer.label) {
-        answers[i] = answer;
-        break;
+        answers[i] = answer
+        break
       }
     }
-    this.questionProp.answers = answers;
-    this.$emit('answer', this.questionProp);
-    console.log(this.questionProp);
+    this.questionProp.answers = answers
+    this.$emit('answer', this.questionProp)
+    console.log(this.questionProp)
   }
 
-  getInfo() {
-    console.log(this.questionProp);
+  getInfo () {
+    console.log(this.questionProp)
   }
 
-  setPosition() {
-    (<HTMLDivElement>this.$refs.question).style.transform = 'translate(' + (this.questionProp.x || 0) + 'px, ' + (this.questionProp.y || 0) + 'px)';
-    (<HTMLDivElement>this.$refs.question).setAttribute('data-x', (this.questionProp.x || 0) + '');
-    (<HTMLDivElement>this.$refs.question).setAttribute('data-y', (this.questionProp.y || 0) + '');
+  setPosition () {
+    (<HTMLDivElement> this.$refs.question).style.transform = 'translate(' + (this.questionProp.x || 0) + 'px, ' + (this.questionProp.y || 0) + 'px)';
+    (<HTMLDivElement> this.$refs.question).setAttribute('data-x', (this.questionProp.x || 0) + '');
+    (<HTMLDivElement> this.$refs.question).setAttribute('data-y', (this.questionProp.y || 0) + '')
   }
 
-  setSize() {
-    (<HTMLDivElement>this.$refs.question).style.width = (this.questionProp.width || 0) + 'px';
-    (<HTMLDivElement>this.$refs.question).style.height = (this.questionProp.height || 0) + 'px';
+  setSize () {
+    (<HTMLDivElement> this.$refs.question).style.width = (this.questionProp.width || 0) + 'px';
+    (<HTMLDivElement> this.$refs.question).style.height = (this.questionProp.height || 0) + 'px'
   }
 
-  setStyle() {
-    (<HTMLDivElement>this.$refs.question).style.backgroundColor = this.hexToRgb(this.questionProp.bgColor as string, this.questionProp.opacity);
-    (<HTMLDivElement>this.$refs.question).style.border = '1px solid ' + this.hexToRgb(this.questionProp.borderColor as string, 1);
+  setStyle () {
+    (<HTMLDivElement> this.$refs.question).style.backgroundColor = this.hexToRgb(this.questionProp.bgColor as string, this.questionProp.opacity);
+    (<HTMLDivElement> this.$refs.question).style.border = '1px solid ' + this.hexToRgb(this.questionProp.borderColor as string, 1)
   }
 
-  hexToRgb(hex: string, opacity?: number) {
-    if (opacity == undefined) opacity = 1;
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    if (!result) return '';
-    return 'rgba(' + parseInt(result[1], 16) + ',' + parseInt(result[2], 16) + ',' + parseInt(result[3], 16) + ',' + opacity + ')';
+  hexToRgb (hex: string, opacity?: number) {
+    if (opacity == undefined) opacity = 1
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+    if (!result) return ''
+    return 'rgba(' + parseInt(result[1], 16) + ',' + parseInt(result[2], 16) + ',' + parseInt(result[3], 16) + ',' + opacity + ')'
   }
 }

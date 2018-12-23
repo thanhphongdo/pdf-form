@@ -6,12 +6,12 @@ import { Level } from '../../models/index'
 import { GetLevelBySource, SetLevelBySource, GetSharedData } from '../../interfaces/index'
 
 @Component({
-	name: 'SelectLevel',
-	mixins: [template],
-	computed: mapGetters(['getLevelBySource']),
-	methods: {
-		...mapActions(['setLevelBySource', 'test'])
-	}
+  name: 'SelectLevel',
+  mixins: [template],
+  computed: mapGetters(['getLevelBySource']),
+  methods: {
+    ...mapActions(['setLevelBySource', 'test'])
+  }
 })
 export default class SelectLevel extends BaseVue {
 	@Prop() private msg!: string;
@@ -22,21 +22,21 @@ export default class SelectLevel extends BaseVue {
 
 	test: any;
 
-	mounted() {
-		var self = this;
-		this.showWaiting();
-		this.setLevelBySource('EoT3y7nabE').then(data => {
-			self.hideWaiting();
-		}).catch(err => {
-			self.hideWaiting();
-		})
-		this.test()
+	mounted () {
+	  var self = this
+	  this.showWaiting()
+	  this.setLevelBySource('EoT3y7nabE').then(data => {
+	    self.hideWaiting()
+	  }).catch(err => {
+	    self.hideWaiting()
+	  })
+	  this.test()
 	}
 
-	selectLevel(levelId: string) {
-		this.$emit('selectLevelAction', {
-			levelId: levelId
-		});
-		this.showWaiting();
+	selectLevel (levelId: string) {
+	  this.$emit('selectLevelAction', {
+	    levelId: levelId
+	  })
+	  this.showWaiting()
 	}
 }

@@ -15,11 +15,11 @@ export class BaseVue extends Vue {
 
   public static jQuery = $;
 
-  showWaiting() {
-    $('.waiting').css('display', 'flex');
+  showWaiting () {
+    $('.waiting').css('display', 'flex')
   }
 
-  hideWaiting() {
-    $('.waiting').css('display', 'none');
+  hideWaiting () {
+    $('.waiting').css('display', 'none')
   }
 }

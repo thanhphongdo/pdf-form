@@ -22,12 +22,12 @@ export default class SelectTopic extends BaseVue {
 	selectTopic: any;
 
 	mounted () {
-    var self = this;
+	  var self = this
 	  this.setTopicBySource('EoT3y7nabE').then(data => {
-			self.hideWaiting();
-		}).catch(err => {
-			self.hideWaiting();
-		})
+	    self.hideWaiting()
+	  }).catch(err => {
+	    self.hideWaiting()
+	  })
 	}
 
 	nextTopic () {

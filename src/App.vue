@@ -64,25 +64,25 @@
 
 <script>
 import {
-    mapActions
+  mapActions
 } from 'vuex'
 import {
-    mapGetters
+  mapGetters
 } from 'vuex'
 import {
-    Actions,
-    Getters
+  Actions,
+  Getters
 } from './enums'
 export default {
-    name: 'App',
-    components: {},
-    data() {
-        return {}
-    },
-    mounted() {
-        M.AutoInit()
-    },
-    methods: {},
-    computed: {}
+  name: 'App',
+  components: {},
+  data () {
+    return {}
+  },
+  mounted () {
+    M.AutoInit()
+  },
+  methods: {},
+  computed: {}
 }
 </script>

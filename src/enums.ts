@@ -6,7 +6,7 @@ export const AuthenStep = {
 export const AnswerType = {
   CHECKBOX: 'CHECKBOX',
   RADIO: 'RADIO',
-  TEXTBOX: 'TEXTBOX',
+  TEXTBOX: 'TEXTBOX'
 }
 
 export const FirstFlowStep = {

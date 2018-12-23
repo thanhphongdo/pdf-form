@@ -27,11 +27,11 @@ const manageDataModule: Module<ManageDataModule, RootStateInterface> = {
     getQAData: (state) => (id: any) => {
       if (id) {
         var data = state.formData.filter(item => {
-          return item.id == id;
-        });
-        return data[0];
+          return item.id == id
+        })
+        return data[0]
       }
-      return state.formData;
+      return state.formData
     }
   },
   mutations: {
@@ -40,14 +40,14 @@ const manageDataModule: Module<ManageDataModule, RootStateInterface> = {
   actions: {
     answer: ({ commit, state }, formData: FormDataInterface) => {
       var qaFilter = state.formData.filter(item => {
-        return item.id == formData.id;
-      });
+        return item.id == formData.id
+      })
       if (qaFilter.length) {
-        qaFilter[0].qa = formData.qa;
+        qaFilter[0].qa = formData.qa
       } else {
-        state.formData.push(formData);
+        state.formData.push(formData)
       }
-      console.log('xxx');
+      console.log('xxx')
     }
   }
 }

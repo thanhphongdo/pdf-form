@@ -25,7 +25,6 @@ export default class SelectWord extends BaseVue {
 
 	onSelectedWord (word: Word) {
 	  (<Carousel> this.$refs.carousel).removeCurrentSlide()
-    this.countSelectedWord++
-    
+	  this.countSelectedWord++
 	}
 }
