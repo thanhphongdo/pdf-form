@@ -3,6 +3,25 @@ import { QuestionInterface, AnswerInterface, QAInterface } from '../../interface
 export const formData: QAInterface[] = [
   {
     question: {
+      id: 0,
+      width: 277,
+      height: 33,
+      x: 575,
+      y: 2
+    },
+    answers: [
+      {
+        label: 'a',
+        width: 190,
+        height: 20,
+        x: 50,
+        y: 6,
+        type: 'TEXTBOX'
+      }
+    ]
+  },
+  {
+    question: {
       id: 1,
       width: 326,
       height: 101,
@@ -604,11 +623,103 @@ export const formData: QAInterface[] = [
   },
   {
     question: {
+      id: '13_1',
+      width: 434,
+      height: 34,
+      x: 420,
+      y: 1066
+    },
+    answers: [
+      {
+        label: 'a',
+        width: 40,
+        height: 16,
+        x: 223,
+        y: 3
+      },
+      {
+        label: 'b',
+        width: 40,
+        height: 16,
+        x: 263,
+        y: 3
+      },
+      {
+        label: 'c',
+        width: 40,
+        height: 16,
+        x: 302,
+        y: 3
+      },
+      {
+        label: 'd',
+        width: 40,
+        height: 16,
+        x: 341,
+        y: 3
+      },
+      {
+        label: 'e',
+        width: 40,
+        height: 16,
+        x: 380,
+        y: 3
+      }
+    ]
+  },
+  {
+    question: {
+      id: '13_2',
+      width: 434,
+      height: 34,
+      x: 420,
+      y: 1100
+    },
+    answers: [
+      {
+        label: 'a',
+        width: 40,
+        height: 16,
+        x: 223,
+        y: 14
+      },
+      {
+        label: 'b',
+        width: 40,
+        height: 16,
+        x: 263,
+        y: 14
+      },
+      {
+        label: 'c',
+        width: 40,
+        height: 16,
+        x: 302,
+        y: 14
+      },
+      {
+        label: 'd',
+        width: 40,
+        height: 16,
+        x: 341,
+        y: 14
+      },
+      {
+        label: 'e',
+        width: 40,
+        height: 16,
+        x: 380,
+        y: 14
+      }
+    ]
+  },
+  {
+    question: {
       id: 14,
       width: 804,
-      height: 78,
+      height: 76,
       x: 0,
-      y: 1129
+      y: 1135
     },
     answers: [
       {
@@ -616,28 +727,28 @@ export const formData: QAInterface[] = [
         width: 50,
         height: 25,
         x: 2,
-        y: 21
+        y: 18
       },
       {
         label: 'b',
         width: 50,
         height: 25,
         x: 2,
-        y: 48
+        y: 45
       },
       {
         label: 'c',
         width: 50,
         height: 25,
         x: 463,
-        y: 21
+        y: 18
       },
       {
         label: 'd',
         width: 50,
         height: 25,
         x: 463,
-        y: 48
+        y: 45
       }
     ]
   }

@@ -139,6 +139,7 @@ export default class Answer extends BaseVue {
   }
 
   check(check?: boolean) {
+    if (this.answerProp.type == AnswerType.TEXTBOX) return;
     var ascOpacity = 0.2
     if (this.answerProp.checked == check) ascOpacity = 0;
     this.answerProp.checked = !this.answerProp.checked
@@ -154,14 +155,18 @@ export default class Answer extends BaseVue {
 
   checkByEnter() {
     this.check();
-    if (this.answerProp.checked) {
-      if ($(this.$refs.answer).next().length) {
-        $(this.$refs.answer).next().children().last().focus()
-      }
-      else {
-        $(this.$refs.answer).parent().next().find('.answer').first().children().last().focus()
-      }
+    if ($(this.$refs.answer).next().length) {
+      $(this.$refs.answer).next().children().last().focus()
     }
+    else {
+      $(this.$refs.answer).parent().next().find('.answer').first().children().last().focus()
+    }
+  }
+
+  onChangeTextBox(event: any) {
+    console.log(event);
+    this.answerProp.value = event.target.value
+    this.$emit('answer', this.answerProp)
   }
 
   dbClickAnswer(event: KeyboardEvent) {

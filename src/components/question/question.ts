@@ -4,6 +4,7 @@ import { QuestionInterface, AnswerInterface } from '../../interfaces/qa.interfac
 import { mapGetters, mapActions } from 'vuex'
 import { BaseVue } from '../../shared/components/index'
 import Answer from '@/components/answer/answer.ts'
+import { AnswerType } from '../../enums'
 var interact = require('interactjs')
 import * as jQuery from 'jquery'
 var $: JQueryStatic = jQuery.default

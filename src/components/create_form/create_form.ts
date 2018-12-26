@@ -8,6 +8,7 @@ import { PDFJSStatic } from 'pdfjs-dist'
 import { Pagination, PaginationConfig } from 'pagination-tools'
 import Question from '@/components/question/question.ts'
 import Answer from '@/components/answer/answer.ts'
+import { AnswerType } from '../../enums'
 import { formData } from './form_data'
 import * as M from 'materialize-css'
 var pdfJS: PDFJSStatic = <any>PdfJSModule
@@ -37,6 +38,7 @@ export default class CreateForm extends BaseVue {
   public answer: any;
   private previewAnswerModal!: M.Modal;
   private gridOptions!: GridOptions;
+  private previewGrid!: Grid;
   mounted() {
     var self = this
     this.pagination = new Pagination(new PaginationConfig({
@@ -80,10 +82,15 @@ export default class CreateForm extends BaseVue {
             }, 100)
             setTimeout(() => {
               // document.getElementsByClassName('question')[0].getElementsByClassName('answer')[0].children[2].focus()
-              $('.question').first().find('.answer').first().children().last().focus();
+              if (self.formData && self.formData[0].answers[0].type == AnswerType.CHECKBOX) {
+                $('.question').first().find('.answer').first().children().last().focus();
+              }
+              if (self.formData && self.formData[0].answers[0].type == AnswerType.TEXTBOX) {
+                $('.question').first().find('.answer').find('input').focus();
+              }
               self.hideWaiting();
             }, 200)
-            page.render(renderContext).then(()=>{
+            page.render(renderContext).then(() => {
               resolve()
             })
           })
@@ -92,11 +99,11 @@ export default class CreateForm extends BaseVue {
     }))
 
     this.previewAnswerModal = M.Modal.init(document.querySelector('#previewAnswerModal') as Element);
-    window.onkeyup = (event)=>{
-      if(event.ctrlKey && event.keyCode == 39){
+    window.onkeyup = (event) => {
+      if (event.ctrlKey && event.keyCode == 39) {
         self.pagination.nextPage();
       }
-      if(event.ctrlKey && event.keyCode == 37){
+      if (event.ctrlKey && event.keyCode == 37) {
         self.pagination.prevPage();
       }
     }
@@ -131,7 +138,11 @@ export default class CreateForm extends BaseVue {
       item.qa.forEach(qaItem => {
         var col = 'Q' + qaItem.question.id + '_';
         qaItem.answers.forEach(ansItem => {
-          dataItem[col + ansItem.label] = ansItem.checked || false;
+          if (!ansItem.type || ansItem.type == AnswerType.CHECKBOX) {
+            dataItem[col + ansItem.label] = ansItem.checked || false;
+          } else if (ansItem.type == AnswerType.TEXTBOX) {
+            dataItem[col + ansItem.label] = ansItem.value
+          }
         })
       })
       previewData.push(dataItem)
@@ -141,18 +152,22 @@ export default class CreateForm extends BaseVue {
       // var dataHeaderItem: any = {};
       item.answers.forEach(ansItem => {
         previewDataHeader.push({
-          headerName: col + ansItem.label, 
+          headerName: col + ansItem.label,
           field: col + ansItem.label,
-          width: 80
+          width: 100
         })
       })
     });
-    this.gridOptions = {
-      columnDefs: previewDataHeader,
-      rowData: previewData
-    };
-    let eGridDiv: HTMLElement = <HTMLElement>document.querySelector('#previewDataGrid');
-    new Grid(eGridDiv, this.gridOptions);
+    if (!this.previewGrid) {
+      this.gridOptions = {
+        columnDefs: previewDataHeader,
+        rowData: previewData
+      };
+      let eGridDiv: HTMLElement = <HTMLElement>document.querySelector('#previewDataGrid');
+      this.previewGrid = new Grid(eGridDiv, this.gridOptions);
+    } else {
+      (this.gridOptions.api as GridApi).setRowData(previewData);
+    }
     // (<any>window).x = this.gridOptions;
   }
 
