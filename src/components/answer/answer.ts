@@ -70,14 +70,16 @@ export default class Answer extends BaseVue {
 
   mounted() {
     var self = this
-    if (this.answerProp.autoIncrement) {
+    if (this.answerProp.autoIncrement && this.answerProp.value == null) {
       var prevQAData = this.getQAData(this.formIndex - 1) as FormDataInterface;
       if (prevQAData) {
         var value = parseInt(prevQAData.qa[this.questionIndex].answers[0].value as string)
-        if(!isNaN(value)) this.answerProp.value = value + 1
-        this.onChangeTextBox(null)
+        if (!isNaN(value)) this.answerProp.value = value + 1
       }
     }
+    setTimeout(() => {
+      self.$emit('answer', this.answerProp)
+    }, 100)
     interact(this.$refs.answer)
       .draggable({})
       .resizable({
