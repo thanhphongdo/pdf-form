@@ -13,7 +13,7 @@ import { formData } from './form_data'
 import * as M from 'materialize-css'
 var pdfJS: PDFJSStatic = <any>PdfJSModule
 var interact = require('interactjs')
-import { Grid, GridOptions, GridApi } from 'ag-grid-community';
+import { Grid, GridOptions, GridApi, ColDef } from 'ag-grid-community';
 import * as jQuery from 'jquery'
 var $: JQueryStatic = jQuery.default
 
@@ -54,6 +54,7 @@ export default class CreateForm extends BaseVue {
             if (self.getQAData(page)) {
               self.formData = (self.getQAData(page) as FormDataInterface).qa
             } else {
+              console.log(formData)
               self.formData = JSON.parse(JSON.stringify(formData))
             }
           }, 200)
@@ -133,8 +134,10 @@ export default class CreateForm extends BaseVue {
     var data = this.getQAData() as FormDataInterface[];
     var previewData: any[] = [];
     var previewDataHeader: any[] = [];
-    data.forEach(item => {
+    console.log(data);
+    data.forEach((item, index) => {
       var dataItem: any = {};
+      dataItem.no = index
       item.qa.forEach(qaItem => {
         var col = 'Q' + qaItem.question.id + '_';
         qaItem.answers.forEach(ansItem => {
@@ -147,6 +150,11 @@ export default class CreateForm extends BaseVue {
       })
       previewData.push(dataItem)
     })
+    previewDataHeader.push({
+      headerName: 'No.',
+      field: 'no',
+      width: 70
+    });
     this.formData.forEach(item => {
       var col = 'Q' + item.question.id + '_';
       // var dataHeaderItem: any = {};
@@ -172,6 +180,11 @@ export default class CreateForm extends BaseVue {
   }
 
   exportCsv() {
+    var columnKeys = [];
+    for(var i = 0; i< (this.gridOptions.columnDefs as ColDef[]).length; i++){
+      columnKeys.push((this.gridOptions.columnDefs as ColDef[])[i].field);
+    }
+    columnKeys.splice(0, 1);
     var params = {
       skipHeader: false,
       skipFooters: true,
@@ -182,6 +195,7 @@ export default class CreateForm extends BaseVue {
   }
 
   onAnswer(question: QuestionInterface) {
+    this.formData[question.id].question = question
     for (var i = 0; i < this.formData.length; i++) {
       if (this.formData[i].question.id == question.id) {
         this.formData[i].answers = question.answers as AnswerInterface[]

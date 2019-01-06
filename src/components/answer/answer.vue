@@ -12,7 +12,7 @@
     <div v-if="answerProp.type == 'TEXTBOX'" class="width-100 height-100 display-flex padding-left-5 align-items-center answer-item">
         <span class="margin-right-5">{{label}}</span>
         <div>
-            <input style="margin-left:1px; margin-top:1px; height: 16px; line-height: 16px; font-size:13px" @change="onChangeTextBox"/>
+            <input style="margin-left:1px; margin-top:1px; height: 16px; line-height: 16px; font-size:13px" v-model="answerProp.value" @change="onChangeTextBox"/>
         </div>
     </div>
 </div>

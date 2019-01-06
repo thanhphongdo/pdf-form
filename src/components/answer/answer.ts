@@ -1,6 +1,6 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import template from './answer.vue'
-import { AnswerInterface } from '../../interfaces/qa.interface'
+import { AnswerInterface, GetQAData, FormDataInterface } from '../../interfaces/index'
 import { mapGetters, mapActions } from 'vuex'
 import { BaseVue } from '../../shared/components/index'
 import { AnswerType } from '../../enums'
@@ -19,12 +19,14 @@ export interface AnswerStyleInterface {
   components: {
   },
   mixins: [template],
-  computed: mapGetters([]),
+  computed: mapGetters(['getQAData']),
   methods: {
     ...mapActions([])
   }
 })
 export default class Answer extends BaseVue {
+  @Prop() private formIndex!: number;
+  @Prop() private questionIndex!: number;
   @Prop() private type!: string;
   @Prop() private width!: number;
   @Prop() private height!: number;
@@ -37,8 +39,10 @@ export default class Answer extends BaseVue {
   @Prop() private content!: string;
   @Prop() private value!: any;
   @Prop() private checked!: boolean;
+  @Prop() private autoIncrement!: boolean;
 
   public answerProp: AnswerInterface = {};
+  public getQAData!: GetQAData;
 
   constructor() {
     super()
@@ -58,13 +62,22 @@ export default class Answer extends BaseVue {
         value: this.value || null,
         bgColor: this.bgColor || '#7cb342',
         opacity: this.opacity || 0.2,
-        borderColor: this.borderColor || '#7cb342'
+        borderColor: this.borderColor || '#7cb342',
+        autoIncrement: this.autoIncrement || false
       }
     }
   }
 
   mounted() {
     var self = this
+    if (this.answerProp.autoIncrement) {
+      var prevQAData = this.getQAData(this.formIndex - 1) as FormDataInterface;
+      if (prevQAData) {
+        var value = parseInt(prevQAData.qa[this.questionIndex].answers[0].value as string)
+        if(!isNaN(value)) this.answerProp.value = value + 1
+        this.onChangeTextBox(null)
+      }
+    }
     interact(this.$refs.answer)
       .draggable({})
       .resizable({
@@ -164,8 +177,8 @@ export default class Answer extends BaseVue {
   }
 
   onChangeTextBox(event: any) {
-    console.log(event);
-    this.answerProp.value = event.target.value
+    // console.log(event);
+    // this.answerProp.value = event.target.value
     this.$emit('answer', this.answerProp)
   }
 

@@ -13,6 +13,7 @@ export interface AnswerInterface {
     borderColor?: string;
     checked?: boolean;
     textAnswer?: string;
+    autoIncrement?: boolean;
 }
 
 export interface QuestionInterface {
@@ -28,6 +29,7 @@ export interface QuestionInterface {
     opacity?: number;
     borderColor?: string;
     answers?: AnswerInterface[];
+    defaultCheckAll?: boolean;
 }
 
 export interface QAInterface {

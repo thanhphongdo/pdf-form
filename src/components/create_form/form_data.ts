@@ -7,7 +7,8 @@ export const formData: QAInterface[] = [
       width: 277,
       height: 33,
       x: 575,
-      y: 2
+      y: 2,
+      defaultCheckAll: false
     },
     answers: [
       {
@@ -16,7 +17,8 @@ export const formData: QAInterface[] = [
         height: 20,
         x: 50,
         y: 6,
-        type: 'TEXTBOX'
+        type: 'TEXTBOX',
+        autoIncrement: true
       }
     ]
   },
@@ -26,7 +28,8 @@ export const formData: QAInterface[] = [
       width: 326,
       height: 101,
       x: 0,
-      y: 155
+      y: 155,
+      defaultCheckAll: true
     },
     answers: [
       {
@@ -65,7 +68,8 @@ export const formData: QAInterface[] = [
       width: 374,
       height: 101,
       x: 0,
-      y: 258
+      y: 258,
+      defaultCheckAll: true
     },
     answers: [
       {
@@ -104,7 +108,8 @@ export const formData: QAInterface[] = [
       width: 343,
       height: 83,
       x: 0,
-      y: 361
+      y: 361,
+      defaultCheckAll: true
     },
     answers: [
       {
@@ -136,7 +141,8 @@ export const formData: QAInterface[] = [
       width: 343,
       height: 172,
       x: 0,
-      y: 446
+      y: 446,
+      defaultCheckAll: true
     },
     answers: [
       {
@@ -203,7 +209,8 @@ export const formData: QAInterface[] = [
       width: 395,
       height: 172,
       x: 0,
-      y: 621
+      y: 621,
+      defaultCheckAll: true
     },
     answers: [
       {
@@ -270,7 +277,8 @@ export const formData: QAInterface[] = [
       width: 395,
       height: 172,
       x: 0,
-      y: 796
+      y: 796,
+      defaultCheckAll: true
     },
     answers: [
       {
@@ -323,7 +331,8 @@ export const formData: QAInterface[] = [
       width: 395,
       height: 147,
       x: 0,
-      y: 975
+      y: 975,
+      defaultCheckAll: true
     },
     answers: [
       {

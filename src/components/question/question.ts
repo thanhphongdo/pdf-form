@@ -1,6 +1,6 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import template from './question.vue'
-import { QuestionInterface, AnswerInterface } from '../../interfaces/qa.interface'
+import { QuestionInterface, AnswerInterface, GetQAData } from '../../interfaces/index'
 import { mapGetters, mapActions } from 'vuex'
 import { BaseVue } from '../../shared/components/index'
 import Answer from '@/components/answer/answer.ts'
@@ -15,12 +15,15 @@ var $: JQueryStatic = jQuery.default
     Answer
   },
   mixins: [template],
-  computed: mapGetters([]),
+  computed: mapGetters(['getQAData']),
   methods: {
     ...mapActions([])
   }
 })
 export default class Question extends BaseVue {
+  @Prop() private id!: number;
+  @Prop() private formIndex!: number;
+  @Prop() private questionIndex!: number;
   @Prop() private width!: number;
   @Prop() private height!: number;
   @Prop() private x!: number;
@@ -32,15 +35,18 @@ export default class Question extends BaseVue {
   @Prop() private content!: string;
   @Prop() private value!: any;
   @Prop() private answers!: AnswerInterface[];
+  @Prop() private defaultCheckAll!: boolean;
 
   private questionProp: QuestionInterface = {};
   private checkAllFlag: boolean = false;
+  public getQAData!: GetQAData;
 
   data() {
     var data: {
       questionProp?: QuestionInterface
     } = {
       questionProp: {
+        id: this.id,
         width: this.width || 30,
         height: this.height || 30,
         x: this.x || 0,
@@ -51,7 +57,8 @@ export default class Question extends BaseVue {
         bgColor: this.bgColor || '#7cb342',
         opacity: this.opacity || 0.1,
         borderColor: this.borderColor || '#7cb342',
-        answers: this.answers || []
+        answers: this.answers || [],
+        defaultCheckAll: this.defaultCheckAll || false
       }
     }
     return data
@@ -59,7 +66,11 @@ export default class Question extends BaseVue {
 
   mounted() {
     var self = this
-
+    if (this.questionProp.defaultCheckAll) {
+      this.questionProp.defaultCheckAll = false;
+      this.checkAll()
+      this.onAnswer
+    }
     interact(this.$refs.question)
       .draggable({})
       .resizable({
@@ -179,6 +190,7 @@ export default class Question extends BaseVue {
       })
     }, 100)
     this.questionProp.answers = answers
+    this.questionProp.defaultCheckAll = false;
     this.$emit('answer', this.questionProp)
   }
 

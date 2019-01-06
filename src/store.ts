@@ -25,7 +25,7 @@ const manageDataModule: Module<ManageDataModule, RootStateInterface> = {
   },
   getters: {
     getQAData: (state) => (id: any) => {
-      if (id) {
+      if (id != undefined) {
         var data = state.formData.filter(item => {
           return item.id == id
         })
@@ -45,7 +45,7 @@ const manageDataModule: Module<ManageDataModule, RootStateInterface> = {
       if (qaFilter.length) {
         qaFilter[0].qa = formData.qa
       } else {
-        state.formData.push(formData)
+        state.formData[formData.id] = formData
       }
     }
   }
