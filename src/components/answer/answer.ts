@@ -27,19 +27,21 @@ export interface AnswerStyleInterface {
 export default class Answer extends BaseVue {
   @Prop() private formIndex!: number;
   @Prop() private questionIndex!: number;
-  @Prop() private type!: string;
-  @Prop() private width!: number;
-  @Prop() private height!: number;
-  @Prop() private x!: number;
-  @Prop() private y!: number;
-  @Prop() private bgColor!: string;
-  @Prop() private opacity!: number;
-  @Prop() private borderColor!: string;
-  @Prop() private label!: string;
-  @Prop() private content!: string;
-  @Prop() private value!: any;
-  @Prop() private checked!: boolean;
-  @Prop() private autoIncrement!: boolean;
+  // @Prop() private type!: string;
+  // @Prop() private width!: number;
+  // @Prop() private height!: number;
+  // @Prop() private x!: number;
+  // @Prop() private y!: number;
+  // @Prop() private bgColor!: string;
+  // @Prop() private opacity!: number;
+  // @Prop() private borderColor!: string;
+  // @Prop() private label!: string;
+  // @Prop() private content!: string;
+  // @Prop() private value!: any;
+  // @Prop() private checked!: boolean;
+  // @Prop() private autoIncrement!: boolean;
+
+  @Prop() private answerConfig!: AnswerInterface;
 
   public answerProp: AnswerInterface = {};
   public getQAData!: GetQAData;
@@ -51,19 +53,20 @@ export default class Answer extends BaseVue {
   data() {
     return {
       answerProp: {
-        type: this.type || AnswerType.CHECKBOX,
-        checked: this.checked || false,
-        width: this.width || 30,
-        height: this.height || 30,
-        x: this.x || 0,
-        y: this.y || 0,
-        label: this.label || '',
-        content: this.content || '',
-        value: this.value || null,
-        bgColor: this.bgColor || '#7cb342',
-        opacity: this.opacity || 0.2,
-        borderColor: this.borderColor || '#7cb342',
-        autoIncrement: this.autoIncrement || false
+        type: this.answerConfig.type || AnswerType.CHECKBOX,
+        checked: this.answerConfig.checked || false,
+        width: this.answerConfig.width || 30,
+        height: this.answerConfig.height || 30,
+        x: this.answerConfig.x || 0,
+        y: this.answerConfig.y || 0,
+        label: this.answerConfig.label || '',
+        content: this.answerConfig.content || '',
+        value: this.answerConfig.value || null,
+        bgColor: this.answerConfig.bgColor || '#7cb342',
+        opacity: this.answerConfig.opacity || 0.2,
+        borderColor: this.answerConfig.borderColor || '#7cb342',
+        autoIncrement: this.answerConfig.autoIncrement || false,
+        incrementStep: this.answerConfig.incrementStep || 1
       }
     }
   }
@@ -74,7 +77,7 @@ export default class Answer extends BaseVue {
       var prevQAData = this.getQAData(this.formIndex - 1) as FormDataInterface;
       if (prevQAData) {
         var value = parseInt(prevQAData.qa[this.questionIndex].answers[0].value as string)
-        if (!isNaN(value)) this.answerProp.value = value + 1
+        if (!isNaN(value)) this.answerProp.value = value + (this.answerProp.incrementStep as number)
       }
     }
     setTimeout(() => {

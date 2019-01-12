@@ -14,6 +14,7 @@ export interface AnswerInterface {
     checked?: boolean;
     textAnswer?: string;
     autoIncrement?: boolean;
+    incrementStep?: number;
 }
 
 export interface QuestionInterface {
@@ -22,7 +23,7 @@ export interface QuestionInterface {
     height?: number;
     x?: number;
     y?: number;
-    label?: string;
+    label?: any;
     content?: string;
     value?: any;
     bgColor?: string;

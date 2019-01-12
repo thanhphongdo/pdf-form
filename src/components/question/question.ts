@@ -24,18 +24,19 @@ export default class Question extends BaseVue {
   @Prop() private id!: number;
   @Prop() private formIndex!: number;
   @Prop() private questionIndex!: number;
-  @Prop() private width!: number;
-  @Prop() private height!: number;
-  @Prop() private x!: number;
-  @Prop() private y!: number;
-  @Prop() private bgColor!: string;
-  @Prop() private opacity!: number;
-  @Prop() private borderColor!: string;
-  @Prop() private label!: string;
-  @Prop() private content!: string;
-  @Prop() private value!: any;
+  // @Prop() private width!: number;
+  // @Prop() private height!: number;
+  // @Prop() private x!: number;
+  // @Prop() private y!: number;
+  // @Prop() private bgColor!: string;
+  // @Prop() private opacity!: number;
+  // @Prop() private borderColor!: string;
+  // @Prop() private label!: string;
+  // @Prop() private content!: string;
+  // @Prop() private value!: any;
   @Prop() private answers!: AnswerInterface[];
-  @Prop() private defaultCheckAll!: boolean;
+  // @Prop() private defaultCheckAll!: boolean;
+  @Prop() private questionConfig!: QuestionInterface;
 
   private questionProp: QuestionInterface = {};
   private checkAllFlag: boolean = false;
@@ -47,18 +48,18 @@ export default class Question extends BaseVue {
     } = {
       questionProp: {
         id: this.id,
-        width: this.width || 30,
-        height: this.height || 30,
-        x: this.x || 0,
-        y: this.y || 0,
-        label: this.label || '',
-        content: this.content || '',
-        value: this.value || null,
-        bgColor: this.bgColor || '#7cb342',
-        opacity: this.opacity || 0.1,
-        borderColor: this.borderColor || '#7cb342',
+        width: this.questionConfig.width || 30,
+        height: this.questionConfig.height || 30,
+        x: this.questionConfig.x || 0,
+        y: this.questionConfig.y || 0,
+        label: this.questionConfig.label || '',
+        content: this.questionConfig.content || '',
+        value: this.questionConfig.value || null,
+        bgColor: this.questionConfig.bgColor || '#7cb342',
+        opacity: this.questionConfig.opacity || 0.1,
+        borderColor: this.questionConfig.borderColor || '#7cb342',
         answers: this.answers || [],
-        defaultCheckAll: this.defaultCheckAll || false
+        defaultCheckAll: this.questionConfig.defaultCheckAll || false
       }
     }
     return data

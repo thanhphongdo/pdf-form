@@ -33,12 +33,13 @@
               class="waves-effect waves-light btn"
             >Next</button>
                 </div>
-                <div class="position-relative">
-                    <canvas id="canvas" style="width: 300px; height: 500px"></canvas>
+                <div class="position-relative display-flex flex-column">
+                    <canvas v-for="(item, index) in canvasList()" :key="index" :id="item.id"></canvas>
                     <div class="width-100 height-100 position-absolute top-0 left-0">
                         <div v-if="showFormFlag && formData && formData.length" id="resize-container">
                             <template v-for="(item, index) in formData">
-                                <Question v-if="item" :key="index" :id="index" :formIndex="pagination.config.page" :questionIndex="index" :width="item.question.width" :height="item.question.height" :x="item.question.x" :y="item.question.y" :answers="item.answers" :defaultCheckAll="item.question.defaultCheckAll" v-on:answer="onAnswer"></Question>
+                                <Question v-if="item" :key="index" :id="index" :formIndex="pagination.config.page" :questionIndex="index" :questionConfig="item.question" :answers="item.answers" v-on:answer="onAnswer"></Question>
+                                <!-- :width="item.question.width" :height="item.question.height" :x="item.question.x" :y="item.question.y" :answers="item.answers" :defaultCheckAll="item.question.defaultCheckAll" -->
                             </template>
                         </div>
                     </div>

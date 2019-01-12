@@ -1,5 +1,5 @@
 <template>
 <div class="height-100">
-    <CreateForm></CreateForm>
+    <CreateForm pagePerFormProp="2"></CreateForm>
 </div>
 </template>

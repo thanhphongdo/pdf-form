@@ -82,6 +82,14 @@ html, body, #app{
     z-index: 100000;
 }
 
+.ag-primary-cols-filter, .ag-primary-cols-filter:focus, .ag-filter-filter, .ag-filter-filter:focus{
+    border-bottom: none !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    height: 25px !important;
+    margin-bottom: 0px !important;
+}
+
 @media(min-width:992px){
     .main-body{
         margin-top: -64px;
