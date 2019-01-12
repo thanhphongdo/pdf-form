@@ -5,8 +5,8 @@ import { mapGetters, mapActions } from 'vuex'
 import { BaseVue } from '../../shared/components/index'
 import Answer from '@/components/answer/answer.ts'
 import { AnswerType } from '../../enums'
-var interact = require('interactjs')
 import * as jQuery from 'jquery'
+var interact = require('interactjs')
 var $: JQueryStatic = jQuery.default
 
 @Component({
@@ -42,7 +42,7 @@ export default class Question extends BaseVue {
   private checkAllFlag: boolean = false;
   public getQAData!: GetQAData;
 
-  data() {
+  data () {
     var data: {
       questionProp?: QuestionInterface
     } = {
@@ -65,10 +65,10 @@ export default class Question extends BaseVue {
     return data
   }
 
-  mounted() {
+  mounted () {
     var self = this
     if (this.questionProp.defaultCheckAll) {
-      this.questionProp.defaultCheckAll = false;
+      this.questionProp.defaultCheckAll = false
       this.checkAll()
       this.onAnswer
     }
@@ -114,7 +114,7 @@ export default class Question extends BaseVue {
         self.questionProp.height = event.rect.height
       })
 
-    function dragMoveListener(event: any) {
+    function dragMoveListener (event: any) {
       // console.log('drag')
       var target = event.target
 
@@ -141,42 +141,41 @@ export default class Question extends BaseVue {
     this.setStyle()
   }
 
-  checkAll() {
+  checkAll () {
     this.checkAllFlag = !this.checkAllFlag;
     (this.$refs.answer as Answer[]).forEach(item => {
       item.check(this.checkAllFlag)
     })
   }
 
-  checkAllKeyDown(event: KeyboardEvent) {
+  checkAllKeyDown (event: KeyboardEvent) {
     if (event.shiftKey && event.ctrlKey && event.keyCode == 65) {
-      event.preventDefault();
-      this.checkAllFlag = true;
-      this.checkAll();
-      return;
+      event.preventDefault()
+      this.checkAllFlag = true
+      this.checkAll()
+      return
     }
     if (event.ctrlKey && event.keyCode == 65) {
-      event.preventDefault();
-      this.checkAllFlag = false;
-      this.checkAll();
-      $(this.$refs.question).children().last().first().children().last().focus();
-      return;
+      event.preventDefault()
+      this.checkAllFlag = false
+      this.checkAll()
+      $(this.$refs.question).children().last().first().children().last().focus()
+      return
     }
     (this.$refs.answer as Answer[]).forEach(item => {
       if (<string>item.answerProp.label && (<string>item.answerProp.label).toLowerCase() == event.key) {
-        item.check();
-        $(item.$el).first().children().last().focus();
-        return;
+        item.check()
+        $(item.$el).first().children().last().focus()
       }
     })
     if (!isNaN(parseInt(event.key)) && (this.$refs.answer as Answer[])[parseInt(event.key) - 1]) {
-      (this.$refs.answer as Answer[])[parseInt(event.key) - 1].check();
-      $((this.$refs.answer as Answer[])[parseInt(event.key) - 1].$el).first().children().last().focus();
+      (this.$refs.answer as Answer[])[parseInt(event.key) - 1].check()
+      $((this.$refs.answer as Answer[])[parseInt(event.key) - 1].$el).first().children().last().focus()
     }
   }
 
-  onAnswer(answer: AnswerInterface) {
-    var self = this;
+  onAnswer (answer: AnswerInterface) {
+    var self = this
     var answers = this.questionProp.answers as AnswerInterface[]
     for (var i = 0; i < answers.length; i++) {
       if (answers[i].label == answer.label) {
@@ -186,36 +185,36 @@ export default class Question extends BaseVue {
     }
     setTimeout(() => {
       (self.$refs.answer as Answer[]).forEach(item => {
-        self.checkAllFlag = true;
+        self.checkAllFlag = true
         self.checkAllFlag = self.checkAllFlag && (item.answerProp.checked as boolean)
       })
     }, 100)
     this.questionProp.answers = answers
-    this.questionProp.defaultCheckAll = false;
+    this.questionProp.defaultCheckAll = false
     this.$emit('answer', this.questionProp)
   }
 
-  getInfo() {
+  getInfo () {
     console.log(this.questionProp)
   }
 
-  setPosition() {
-    (<HTMLDivElement>this.$refs.question).style.transform = 'translate(' + (this.questionProp.x || 0) + 'px, ' + (this.questionProp.y || 0) + 'px)';
-    (<HTMLDivElement>this.$refs.question).setAttribute('data-x', (this.questionProp.x || 0) + '');
-    (<HTMLDivElement>this.$refs.question).setAttribute('data-y', (this.questionProp.y || 0) + '')
+  setPosition () {
+    (<HTMLDivElement> this.$refs.question).style.transform = 'translate(' + (this.questionProp.x || 0) + 'px, ' + (this.questionProp.y || 0) + 'px)';
+    (<HTMLDivElement> this.$refs.question).setAttribute('data-x', (this.questionProp.x || 0) + '');
+    (<HTMLDivElement> this.$refs.question).setAttribute('data-y', (this.questionProp.y || 0) + '')
   }
 
-  setSize() {
-    (<HTMLDivElement>this.$refs.question).style.width = (this.questionProp.width || 0) + 'px';
-    (<HTMLDivElement>this.$refs.question).style.height = (this.questionProp.height || 0) + 'px'
+  setSize () {
+    (<HTMLDivElement> this.$refs.question).style.width = (this.questionProp.width || 0) + 'px';
+    (<HTMLDivElement> this.$refs.question).style.height = (this.questionProp.height || 0) + 'px'
   }
 
-  setStyle() {
-    (<HTMLDivElement>this.$refs.question).style.backgroundColor = this.hexToRgb(this.questionProp.bgColor as string, this.questionProp.opacity);
-    (<HTMLDivElement>this.$refs.question).style.border = '1px solid ' + this.hexToRgb(this.questionProp.borderColor as string, 1)
+  setStyle () {
+    (<HTMLDivElement> this.$refs.question).style.backgroundColor = this.hexToRgb(this.questionProp.bgColor as string, this.questionProp.opacity);
+    (<HTMLDivElement> this.$refs.question).style.border = '1px solid ' + this.hexToRgb(this.questionProp.borderColor as string, 1)
   }
 
-  hexToRgb(hex: string, opacity?: number) {
+  hexToRgb (hex: string, opacity?: number) {
     if (opacity == undefined) opacity = 1
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
     if (!result) return ''

@@ -4,8 +4,8 @@ import { AnswerInterface, GetQAData, FormDataInterface } from '../../interfaces/
 import { mapGetters, mapActions } from 'vuex'
 import { BaseVue } from '../../shared/components/index'
 import { AnswerType } from '../../enums'
-var interact = require('interactjs')
 import * as jQuery from 'jquery'
+var interact = require('interactjs')
 var $: JQueryStatic = jQuery.default
 
 export interface AnswerStyleInterface {
@@ -46,11 +46,11 @@ export default class Answer extends BaseVue {
   public answerProp: AnswerInterface = {};
   public getQAData!: GetQAData;
 
-  constructor() {
+  constructor () {
     super()
   }
 
-  data() {
+  data () {
     return {
       answerProp: {
         type: this.answerConfig.type || AnswerType.CHECKBOX,
@@ -71,10 +71,10 @@ export default class Answer extends BaseVue {
     }
   }
 
-  mounted() {
+  mounted () {
     var self = this
     if (this.answerProp.autoIncrement && this.answerProp.value == null) {
-      var prevQAData = this.getQAData(this.formIndex - 1) as FormDataInterface;
+      var prevQAData = this.getQAData(this.formIndex - 1) as FormDataInterface
       if (prevQAData) {
         var value = parseInt(prevQAData.qa[this.questionIndex].answers[0].value as string)
         if (!isNaN(value)) this.answerProp.value = value + (this.answerProp.incrementStep as number)
@@ -126,7 +126,7 @@ export default class Answer extends BaseVue {
         self.answerProp.height = event.rect.height
       })
 
-    function dragMoveListener(event: any) {
+    function dragMoveListener (event: any) {
       var target = event.target
 
       // keep the dragged position in the data-x/data-y attributes
@@ -152,14 +152,14 @@ export default class Answer extends BaseVue {
     this.setStyle()
   }
 
-  getInfo() {
+  getInfo () {
     console.log(this.answerProp)
   }
 
-  check(check?: boolean) {
-    if (this.answerProp.type == AnswerType.TEXTBOX) return;
+  check (check?: boolean) {
+    if (this.answerProp.type == AnswerType.TEXTBOX) return
     var ascOpacity = 0.2
-    if (this.answerProp.checked == check) ascOpacity = 0;
+    if (this.answerProp.checked == check) ascOpacity = 0
     this.answerProp.checked = !this.answerProp.checked
     if (check != undefined) this.answerProp.checked = check
     if (this.answerProp.checked) {
@@ -171,47 +171,46 @@ export default class Answer extends BaseVue {
     this.setStyle()
   }
 
-  checkByEnter() {
-    this.check();
+  checkByEnter () {
+    this.check()
     if ($(this.$refs.answer).next().length) {
       $(this.$refs.answer).next().children().last().focus()
-    }
-    else {
+    } else {
       $(this.$refs.answer).parent().next().find('.answer').first().children().last().focus()
     }
   }
 
-  onChangeTextBox(event: any) {
+  onChangeTextBox (event: any) {
     // console.log(event);
     // this.answerProp.value = event.target.value
     this.$emit('answer', this.answerProp)
   }
 
-  dbClickAnswer(event: KeyboardEvent) {
-    event.stopPropagation();
+  dbClickAnswer (event: KeyboardEvent) {
+    event.stopPropagation()
   }
 
-  checkAllKeyDown(event: KeyboardEvent) {
+  checkAllKeyDown (event: KeyboardEvent) {
     this.$emit('checkAllKeyDown', event)
   }
 
-  setPosition() {
-    (<HTMLDivElement>this.$refs.answer).style.transform = 'translate(' + (this.answerProp.x || 0) + 'px, ' + (this.answerProp.y || 0) + 'px)';
-    (<HTMLDivElement>this.$refs.answer).setAttribute('data-x', (this.answerProp.x || 0) + '');
-    (<HTMLDivElement>this.$refs.answer).setAttribute('data-y', (this.answerProp.y || 0) + '')
+  setPosition () {
+    (<HTMLDivElement> this.$refs.answer).style.transform = 'translate(' + (this.answerProp.x || 0) + 'px, ' + (this.answerProp.y || 0) + 'px)';
+    (<HTMLDivElement> this.$refs.answer).setAttribute('data-x', (this.answerProp.x || 0) + '');
+    (<HTMLDivElement> this.$refs.answer).setAttribute('data-y', (this.answerProp.y || 0) + '')
   }
 
-  setSize() {
-    (<HTMLDivElement>this.$refs.answer).style.width = (this.answerProp.width || 0) + 'px';
-    (<HTMLDivElement>this.$refs.answer).style.height = (this.answerProp.height || 0) + 'px'
+  setSize () {
+    (<HTMLDivElement> this.$refs.answer).style.width = (this.answerProp.width || 0) + 'px';
+    (<HTMLDivElement> this.$refs.answer).style.height = (this.answerProp.height || 0) + 'px'
   }
 
-  setStyle() {
-    (<HTMLDivElement>this.$refs.answer).style.backgroundColor = this.hexToRgb(this.answerProp.bgColor as string, this.answerProp.opacity);
-    (<HTMLDivElement>this.$refs.answer).style.border = '1px solid ' + this.hexToRgb(this.answerProp.borderColor as string, 1)
+  setStyle () {
+    (<HTMLDivElement> this.$refs.answer).style.backgroundColor = this.hexToRgb(this.answerProp.bgColor as string, this.answerProp.opacity);
+    (<HTMLDivElement> this.$refs.answer).style.border = '1px solid ' + this.hexToRgb(this.answerProp.borderColor as string, 1)
   }
 
-  hexToRgb(hex: string, opacity?: number) {
+  hexToRgb (hex: string, opacity?: number) {
     if (opacity == undefined) opacity = 1
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
     if (!result) return ''

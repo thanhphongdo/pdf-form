@@ -27,7 +27,7 @@ Vue.prototype.Swiper = Swiper
 // Vue.prototype.jQuery = jQuery;
 
 Vue.use({
-  install: function(Vue, options){
+  install: function (Vue, options) {
     // (<any>window).$ = (<any>window).jQuery = require('jquery'); // you'll have this.$jQuery anywhere in your vue project
     // (<any>window).M = require('materialize-css'); // you'll have this.$jQuery anywhere in your vue project
   }

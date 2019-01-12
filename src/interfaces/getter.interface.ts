@@ -1,5 +1,5 @@
 import { Level, Topic } from '../models/index'
-import { FormDataInterface } from './qa.interface';
+import { FormDataInterface } from './qa.interface'
 
 export interface GetSharedData {
 	(key: string): any;

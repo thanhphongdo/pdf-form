@@ -11,13 +11,13 @@ import Answer from '@/components/answer/answer.ts'
 import { AnswerType } from '../../enums'
 import { formData } from './form_data'
 import * as M from 'materialize-css'
-var pdfJS: PDFJSStatic = <any>PdfJSModule
-var interact = require('interactjs')
 import 'ag-grid-enterprise'
-import { Grid, GridOptions, GridApi, ColDef, ColumnApi } from 'ag-grid-community';
+import { Grid, GridOptions, GridApi, ColDef, ColumnApi } from 'ag-grid-community'
 // import {  } from 'ag-grid-enterprise';
 import * as jQuery from 'jquery'
-import { LicenseManager } from 'ag-grid-enterprise';
+import { LicenseManager } from 'ag-grid-enterprise'
+var pdfJS: PDFJSStatic = <any>PdfJSModule
+var interact = require('interactjs')
 var $: JQueryStatic = jQuery.default
 
 @Component({
@@ -44,12 +44,12 @@ export default class CreateForm extends BaseVue {
   private gridOptions!: GridOptions;
   private previewGrid!: Grid;
   private pagePerForm: number = 1;
-  data() {
+  data () {
     return {
       pagePerForm: this.pagePerFormProp || 1
     }
   }
-  mounted() {
+  mounted () {
     // if(!this.pagePerFormProp) this.pagePerForm = this.pagePerFormProp;
     var self = this
     this.pagination = new Pagination(new PaginationConfig({
@@ -58,7 +58,7 @@ export default class CreateForm extends BaseVue {
         self.showFormFlag = false
         self.formData = []
         return new Promise((resolve, reject) => {
-          self.showWaiting();
+          self.showWaiting()
           setTimeout(() => {
             self.showFormFlag = true
             if (self.getQAData(page)) {
@@ -77,10 +77,10 @@ export default class CreateForm extends BaseVue {
             self.hideWaiting()
             return
           }
-          let formPageForm = (page - 1) * self.pagePerForm + 1;
-          let toPageForm = page * self.pagePerForm;
-          let renderPageArr = [];
-          let countpageForm = 1;
+          let formPageForm = (page - 1) * self.pagePerForm + 1
+          let toPageForm = page * self.pagePerForm
+          let renderPageArr = []
+          let countpageForm = 1
           for (let i = formPageForm; i <= toPageForm; i++) {
             renderPageArr.push(self.renderForm(i, 'form' + countpageForm))
             countpageForm++
@@ -94,25 +94,23 @@ export default class CreateForm extends BaseVue {
           // self.renderForm(page, 'form1').then(() => {
           //   resolve()
           // })
-
         })
       }
     }))
 
-    this.previewAnswerModal = M.Modal.init(document.querySelector('#previewAnswerModal') as Element);
+    this.previewAnswerModal = M.Modal.init(document.querySelector('#previewAnswerModal') as Element)
     window.onkeyup = (event) => {
       if (event.ctrlKey && event.keyCode == 39) {
-        self.pagination.nextPage();
+        self.pagination.nextPage()
       }
       if (event.ctrlKey && event.keyCode == 37) {
-        self.pagination.prevPage();
+        self.pagination.prevPage()
       }
     }
   }
 
-
-  renderForm(page: number, formId: string) {
-    var self = this;
+  renderForm (page: number, formId: string) {
+    var self = this
     var pdfScale = 1.5
     return new Promise((resolve, reject) => {
       var renderPDFContext = (<HTMLCanvasElement>document.getElementById(formId))
@@ -135,35 +133,35 @@ export default class CreateForm extends BaseVue {
           setTimeout(() => {
             // document.getElementsByClassName('question')[0].getElementsByClassName('answer')[0].children[2].focus()
             if (self.formData && self.formData[0].answers[0].type == AnswerType.CHECKBOX) {
-              $('.question').first().find('.answer').first().children().last().focus();
+              $('.question').first().find('.answer').first().children().last().focus()
             }
             if (self.formData && self.formData[0].answers[0].type == AnswerType.TEXTBOX) {
-              $('.question').first().find('.answer').find('input').focus();
+              $('.question').first().find('.answer').find('input').focus()
             }
-            self.hideWaiting();
+            self.hideWaiting()
           }, 200)
         }, errMessage => {
           reject(errMessage)
-          self.hideWaiting();
+          self.hideWaiting()
         })
       }, errMessage => {
-        self.hideWaiting();
+        self.hideWaiting()
         reject(errMessage)
       })
     })
   }
 
-  canvasList() {
-    let canvas: any[] = [];
+  canvasList () {
+    let canvas: any[] = []
     for (let i = 0; i < this.pagePerForm; i++) {
       canvas.push({
         id: 'form' + (i + 1)
       })
     }
-    return canvas;
+    return canvas
   }
 
-  preview() {
+  preview () {
     var self = this
     var file = (<HTMLInputElement>document.getElementById('pdf-file')).files as FileList
     if (file && file.length) {
@@ -182,19 +180,19 @@ export default class CreateForm extends BaseVue {
     }
   }
 
-  showAnswerPreview() {
-    this.previewAnswerModal.open();
-    var data = this.getQAData() as FormDataInterface[];
-    var previewData: any[] = [];
-    var previewDataHeader: any[] = [];
+  showAnswerPreview () {
+    this.previewAnswerModal.open()
+    var data = this.getQAData() as FormDataInterface[]
+    var previewData: any[] = []
+    var previewDataHeader: any[] = []
     data.forEach((item, index) => {
-      var dataItem: any = {};
+      var dataItem: any = {}
       dataItem.no = index
       item.qa.forEach(qaItem => {
-        var col = 'Q' + qaItem.question.label + '_';
+        var col = 'Q' + qaItem.question.label + '_'
         qaItem.answers.forEach(ansItem => {
           if (!ansItem.type || ansItem.type == AnswerType.CHECKBOX) {
-            dataItem[col + ansItem.label] = ansItem.checked ? ansItem.label : '';
+            dataItem[col + ansItem.label] = ansItem.checked ? ansItem.label : ''
           } else if (ansItem.type == AnswerType.TEXTBOX) {
             dataItem[col + ansItem.label] = ansItem.value
           }
@@ -208,10 +206,10 @@ export default class CreateForm extends BaseVue {
       width: 70,
       resizable: true,
       pinned: 'left',
-      filter: "agTextColumnFilter"
-    });
+      filter: 'agTextColumnFilter'
+    })
     this.formData.forEach(item => {
-      var col = 'Q' + item.question.label + '_';
+      var col = 'Q' + item.question.label + '_'
       // var dataHeaderItem: any = {};
       item.answers.forEach(ansItem => {
         previewDataHeader.push({
@@ -219,10 +217,10 @@ export default class CreateForm extends BaseVue {
           field: col + ansItem.label,
           width: 100,
           resizable: true,
-          filter: "agTextColumnFilter"
+          filter: 'agTextColumnFilter'
         })
       })
-    });
+    })
     if (!this.previewGrid) {
       this.gridOptions = {
         defaultColDef: {
@@ -236,33 +234,33 @@ export default class CreateForm extends BaseVue {
         columnDefs: previewDataHeader,
         enableRangeSelection: true,
         rowData: previewData
-      };
-      let eGridDiv: HTMLElement = <HTMLElement>document.querySelector('#previewDataGrid');
-      this.previewGrid = new Grid(eGridDiv, this.gridOptions);
+      }
+      let eGridDiv: HTMLElement = <HTMLElement>document.querySelector('#previewDataGrid')
+      this.previewGrid = new Grid(eGridDiv, this.gridOptions)
     } else {
       (this.gridOptions.api as GridApi).setRowData(previewData)
     }
     (this.gridOptions.columnApi as ColumnApi).autoSizeAllColumns();
-    (this.gridOptions.api as GridApi).closeToolPanel();
+    (this.gridOptions.api as GridApi).closeToolPanel()
     // (<any>window).x = this.gridOptions;
   }
 
-  exportCsv() {
-    var columnKeys = [];
+  exportCsv () {
+    var columnKeys = []
     for (var i = 0; i < (this.gridOptions.columnDefs as ColDef[]).length; i++) {
-      columnKeys.push((this.gridOptions.columnDefs as ColDef[])[i].field);
+      columnKeys.push((this.gridOptions.columnDefs as ColDef[])[i].field)
     }
-    columnKeys.splice(0, 1);
+    columnKeys.splice(0, 1)
     var params = {
       skipHeader: false,
       skipFooters: true,
       skipGroups: true,
-      fileName: "export.csv"
+      fileName: 'export.csv'
     };
-    (this.gridOptions.api as GridApi).exportDataAsCsv(params);
+    (this.gridOptions.api as GridApi).exportDataAsCsv(params)
   }
 
-  onAnswer(question: QuestionInterface) {
+  onAnswer (question: QuestionInterface) {
     this.formData[question.id].question = question
     for (var i = 0; i < this.formData.length; i++) {
       if (this.formData[i].question.id == question.id) {
